@@ -18,11 +18,11 @@ import storm.kafka.ZkHosts;
 public class StockStategyTopology {
     public static void main(String[] args) throws Exception {
         //Configure kafka
-        String zks = "10.9.12.10:2181";
+        String zks = "hadoop10.zto:2181,hadoop11.zto:2181,hadoop12.zto:2181/kafka";
         String topic = "stock";
         //default zookeeper root configuration for storm
         String zkRoot = "/kafkaStorm";
-        String groupId = "kafkaSpout"; //groupId
+        String groupId = "group11"; //groupId
         ZkHosts brokerHosts = new ZkHosts(zks);
         SpoutConfig spoutConfig = new SpoutConfig(brokerHosts, topic, zkRoot, groupId);
         //将json传转为对象
@@ -43,7 +43,7 @@ public class StockStategyTopology {
         Config config = new Config();
         //设置一个spout task上面最多可以多少个没有处理的tuple，以防止tuple队列爆掉
         config.put(Config.TOPOLOGY_MAX_SPOUT_PENDING, 10000);
-        //config.setDebug(false);
+        config.setDebug(false);
 
         //分配几个进程来运行这个这个topology，建议大于物理机器数量。
         config.setNumWorkers(2);
@@ -58,8 +58,6 @@ public class StockStategyTopology {
             // 这里是本地模式下运行的启动代码。
             LocalCluster cluster = new LocalCluster();
             cluster.submitTopology("test", config, topology);
-            Thread.sleep(Integer.MAX_VALUE);
-            cluster.shutdown();
         }
 
 

@@ -8,7 +8,6 @@ import com.ryxc.stock.dto.StockRealTimeEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import java.io.UnsupportedEncodingException;
 import java.util.List;
 
 /**
@@ -22,9 +21,10 @@ public class EventScheme implements Scheme {
     public List<Object> deserialize(byte[] bytes) {
         try {
             String msg = new String(bytes, "UTF-8");
+            log.info("#### msg:"+msg);
             StockRealTimeEvent stockRealTimeEvent = JSONObject.parseObject(msg, StockRealTimeEvent.class);
             return new Values(stockRealTimeEvent);
-        } catch (UnsupportedEncodingException e) {
+        } catch (Exception e) {
             e.printStackTrace();
             log.error("Exception:", e);
         }
