@@ -10,20 +10,6 @@
   <name>jstorm-demo</name>
   <url>http://maven.apache.org</url>
 
-  <build>
-    <plugins>
-      <plugin>
-        <groupId>org.apache.maven.plugins</groupId>
-        <artifactId>maven-compiler-plugin</artifactId>
-        <configuration>
-          <source>1.7</source>
-          <target>1.7</target>
-        </configuration>
-      </plugin>
-    </plugins>
-  </build>
-
-
   <properties>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
   </properties>
@@ -44,6 +30,8 @@
       <groupId>com.alibaba.jstorm</groupId>
       <artifactId>jstorm-core</artifactId>
       <version>2.1.1</version>
+      <!--跑Jstorm本地测试时，请将provided屏蔽，提交到jstorm集群的时候，记得加上provided
+      <scope>provided</scope>-->
       <exclusions>
         <exclusion>
           <groupId>org.slf4j</groupId>
@@ -79,5 +67,48 @@
         </exclusion>
       </exclusions>
     </dependency>
+    <!-- esper -->
+    <dependency>
+      <groupId>com.espertech</groupId>
+      <artifactId>esper</artifactId>
+      <version>5.3.0</version>
+    </dependency>
   </dependencies>
+
+  <build>
+    <plugins>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-compiler-plugin</artifactId>
+        <configuration>
+          <source>1.7</source>
+          <target>1.7</target>
+        </configuration>
+      </plugin>
+      <plugin>
+        <artifactId>maven-assembly-plugin</artifactId>
+        <configuration>
+          <descriptorRefs>
+            <descriptorRef>jar-with-dependencies</descriptorRef>
+          </descriptorRefs>
+          <archive>
+            <manifest>
+              <mainClass></mainClass>
+            </manifest>
+          </archive>
+        </configuration>
+        <executions>
+          <execution>
+            <id>make-assembly</id>
+            <phase>package</phase>
+            <goals>
+              <goal>single</goal>
+            </goals>
+          </execution>
+        </executions>
+      </plugin>
+    </plugins>
+
+  </build>
+
 </project>

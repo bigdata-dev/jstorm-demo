@@ -7,6 +7,8 @@ import backtype.storm.generated.StormTopology;
 import backtype.storm.spout.SchemeAsMultiScheme;
 import backtype.storm.topology.TopologyBuilder;
 import com.ryxc.stock.bolt.StockFilterBolt;
+import com.ryxc.stock.bolt.StockStrategyBolt1;
+import com.ryxc.stock.bolt.StockStrategyBolt2;
 import com.ryxc.stock.utils.EventScheme;
 import storm.kafka.KafkaSpout;
 import storm.kafka.SpoutConfig;
@@ -22,7 +24,7 @@ public class StockStategyTopology {
         String topic = "stock";
         //default zookeeper root configuration for storm
         String zkRoot = "/kafkaStorm";
-        String groupId = "group11"; //groupId
+        String groupId = "group12"; //groupId
         ZkHosts brokerHosts = new ZkHosts(zks);
         SpoutConfig spoutConfig = new SpoutConfig(brokerHosts, topic, zkRoot, groupId);
         //将json传转为对象
@@ -39,6 +41,15 @@ public class StockStategyTopology {
         builder.setBolt("stock-filter", new StockFilterBolt(), 2)//设置2个并行度（executor）
                 .setNumTasks(2)//设置关联task个数
                 .shuffleGrouping("kafka-reader");
+        //大单卖(stock-stategy-1): 选出股票的卖5档总手数大于买5档口总手数100倍时的股票
+        builder.setBolt("stock-stategy-1",new StockStrategyBolt1(),2)
+                .setNumTasks(2)
+                .shuffleGrouping("stock-filter");
+        //大单买(stock-stategy-2): 选出股票的买5档总手数大于卖5档口总手数100倍时的股票
+        builder.setBolt("stock-stategy-2",new StockStrategyBolt2(),2)
+                .setNumTasks(2)
+                .shuffleGrouping("stock-filter");
+
 
         Config config = new Config();
         //设置一个spout task上面最多可以多少个没有处理的tuple，以防止tuple队列爆掉
