@@ -6,9 +6,7 @@ import backtype.storm.StormSubmitter;
 import backtype.storm.generated.StormTopology;
 import backtype.storm.spout.SchemeAsMultiScheme;
 import backtype.storm.topology.TopologyBuilder;
-import com.ryxc.stock.bolt.StockFilterBolt;
-import com.ryxc.stock.bolt.StockStrategyBolt1;
-import com.ryxc.stock.bolt.StockStrategyBolt2;
+import com.ryxc.stock.bolt.*;
 import com.ryxc.stock.utils.EventScheme;
 import storm.kafka.KafkaSpout;
 import storm.kafka.SpoutConfig;
@@ -49,6 +47,16 @@ public class StockStategyTopology {
         builder.setBolt("stock-stategy-2",new StockStrategyBolt2(),2)
                 .setNumTasks(2)
                 .shuffleGrouping("stock-filter");
+        //放巨量(stock-stategy-3): 选出在10秒内成交量超过1000万时的股票
+        builder.setBolt("stock-stategy-3",new StockStrategyBolt3(),2)
+                .setNumTasks(2)
+                .shuffleGrouping("stock-filter");
+        //统计报表
+        builder.setBolt("report",new ReportBolt(),1)
+                .setNumTasks(2)
+                .shuffleGrouping("stock-stategy-1")
+                .shuffleGrouping("stock-stategy-2")
+                .shuffleGrouping("stock-stategy-3");
 
 
         Config config = new Config();

@@ -10,3 +10,6 @@
 
 --大买盘
 {"stockCode":"600571", "newPrice":55.67, "buyPrice1":55.67, "buyCount1":100, "buyPrice2":550000.66, "buyCount2":23, "buyPrice3":55.65, "buyCount3":30, "buyPrice4":55.60, "buyCount4":4, "buyPrice5":55.55, "buyCount5":10, "sellPrice1":55.72, "sellCount1":6526, "sellPrice2":55.74, "sellCount2":185, "sellPrice3":55.76, "sellCount3":10, "sellPrice4":55.78, "sellCount4":10, "sellPrice5":55.8, "sellCount5":165, "current":100}
+
+--放巨量
+{"stockCode":"600573", "newPrice":55.67, "buyPrice1":55.67, "buyCount1":100, "buyPrice2":550000.66, "buyCount2":23, "buyPrice3":55.65, "buyCount3":30, "buyPrice4":55.60, "buyCount4":4, "buyPrice5":55.55, "buyCount5":10, "sellPrice1":55.72, "sellCount1":6526, "sellPrice2":55.74, "sellCount2":185, "sellPrice3":55.76, "sellCount3":10, "sellPrice4":55.78, "sellCount4":10, "sellPrice5":55.8, "sellCount5":165, "current":1000000}

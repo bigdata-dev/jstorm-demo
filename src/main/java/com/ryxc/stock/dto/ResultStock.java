@@ -10,11 +10,19 @@ public class ResultStock implements Serializable {
     private String stockCode;
     private double newPrice;
     private int strategyId;
+    private double totalValue;
 
     public ResultStock(String stockCode, double newPrice, int strategyId) {
         this.stockCode = stockCode;
         this.newPrice = newPrice;
         this.strategyId = strategyId;
+    }
+
+    public ResultStock(String stockCode, double newPrice, int strategyId,double totalValue) {
+        this.stockCode = stockCode;
+        this.newPrice = newPrice;
+        this.strategyId = strategyId;
+        this.totalValue = totalValue;
     }
 
     public String getStockCode() {
@@ -39,5 +47,13 @@ public class ResultStock implements Serializable {
 
     public void setStrategyId(int strategyId) {
         this.strategyId = strategyId;
+    }
+
+    public double getTotalValue() {
+        return totalValue;
+    }
+
+    public void setTotalValue(double totalValue) {
+        this.totalValue = totalValue;
     }
 }

@@ -41,7 +41,7 @@ public class StockStrategyBolt2 extends BaseBasicBolt {
                     EventBean theEvent = newEvents[0];
                     StockRealTimeEvent stockRTEvent = (StockRealTimeEvent)theEvent.getUnderlying();
                     log.info("--------股票策略2(大买盘)选出股票："+stockRTEvent.getStockCode()+" 最新价格："+stockRTEvent.getNewPrice());
-                    basicOutputCollector.emit(new Values(new ResultStock(stockRTEvent.getStockCode(),stockRTEvent.getNewPrice(),1)));
+                    basicOutputCollector.emit(new Values(new ResultStock(stockRTEvent.getStockCode(),stockRTEvent.getNewPrice(),2)));
                 }
             }
         });
