@@ -18,7 +18,8 @@ import storm.kafka.ZkHosts;
 public class StockStategyTopology {
     public static void main(String[] args) throws Exception {
         //Configure kafka
-        String zks = "hadoop10.zto:2181,hadoop11.zto:2181,hadoop12.zto:2181/kafka";
+        String zks = "ryxc163,ryxc164,ryxc165:2181";
+
         String topic = "stock";
         //default zookeeper root configuration for storm
         String zkRoot = "/kafkaStorm";
